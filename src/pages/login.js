@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { navigateTo } from 'gatsby-link';
+
+import * as routes from '../routes';
 
 import { auth } from '../utils/firebase';
 
@@ -34,18 +37,6 @@ class Login extends Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.handleLogin = this.handleLogin.bind(this);
-  }
-
-  handleLogin() {
-    const { email, password } = this.state;
-
-    auth.signInWithEmailAndPassword(email, password);
-
-    this.setState({
-      email: '',
-      password: '',
-    });
   }
 
   handleChange(name, e) {
@@ -54,8 +45,15 @@ class Login extends Component {
   }
 
   handleSubmit(e) {
-    e.preventDefault();
     const { email, password } = this.state;
+
+    auth.signInWithEmailAndPassword(email, password);
+
+    this.setState({
+      email: '',
+      password: '',
+    });
+    navigateTo(routes.HOME);
   }
 
   render() {
@@ -97,9 +95,10 @@ class Login extends Component {
             onChange={e => this.handleChange('password', e)}
           />
           <Button
-            onClick={this.handleLogin}
+            onClick={this.handleSubmit}
             variant="raised"
             color="primary"
+            type="submit"
             className={classes.button}
           >
             Sign-in
