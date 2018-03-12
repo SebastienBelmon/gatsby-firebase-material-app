@@ -3,14 +3,33 @@ import PropTypes from 'prop-types';
 
 import { auth } from '../utils/firebase';
 
-export default class Login extends Component {
+import { withStyles } from 'material-ui/styles';
+import Typography from 'material-ui/Typography';
+import TextField from 'material-ui/TextField';
+import Button from 'material-ui/Button';
+
+const styles = theme => ({
+  root: {
+    textAlign: 'center',
+    paddingTop: theme.spacing.unit * 20,
+  },
+  textField: {
+    margin: 'auto',
+    display: 'block',
+    width: 200,
+  },
+  button: {
+    margin: theme.spacing.unit,
+  },
+});
+
+class Login extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       email: '',
       password: '',
-      isSignUp: true,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -29,10 +48,8 @@ export default class Login extends Component {
     });
   }
 
-  handleChange(e) {
-    const name = e.target.name;
+  handleChange(name, e) {
     const value = e.target.value;
-
     this.setState({ [name]: value });
   }
 
@@ -42,47 +59,51 @@ export default class Login extends Component {
   }
 
   render() {
+    const { classes } = this.props;
     const { email, password, isSignUp } = this.state;
     const { loggedUser } = this.context;
 
+    if (loggedUser) {
+      return (
+        <div className={classes.root}>
+          <Typography variant="title" color="inherit" noWrap>
+            Welcome ! You are already logged with {loggedUser.email}
+          </Typography>
+        </div>
+      );
+    }
+
     return (
-      <div>
-        {loggedUser && (
-          <div>
-            <h3>Welcome ! You are logged with {loggedUser.email}</h3>
-            <button onClick={() => auth.signOut(loggedUser.email)}>
-              LogOut
-            </button>
-            <br />
-          </div>
-        )}
-        <form onSubmit={this.handleSubmit}>
-          <div>
-            <label>Email: </label>
-            <input
-              name="email"
-              onChange={this.handleChange}
-              type="email"
-              value={email}
-            />
-          </div>
-          <div>
-            <label>Password: </label>
-            <input
-              name="password"
-              onChange={this.handleChange}
-              type="password"
-              value={password}
-            />
-          </div>
-          {isSignUp ? (
-            <button type="submit">Register</button>
-          ) : (
-            <button onClick={this.handleLogin}>LogIn</button>
-          )}
-          <button onClick={() => this.setState({ isSignUp: !isSignUp })}>
-            Toggle
-          </button>
+      <div className={classes.root}>
+        <form onSubmit={this.handleSubmi}>
+          <TextField
+            required
+            id="email"
+            label="Email"
+            className={classes.textField}
+            margin="normal"
+            type="email"
+            value={email}
+            onChange={e => this.handleChange('email', e)}
+          />
+          <TextField
+            required
+            id="password"
+            label="Password"
+            className={classes.textField}
+            margin="normal"
+            type="password"
+            value={password}
+            onChange={e => this.handleChange('password', e)}
+          />
+          <Button
+            onClick={this.handleLogin}
+            variant="raised"
+            color="primary"
+            className={classes.button}
+          >
+            Sign-in
+          </Button>
         </form>
       </div>
     );
@@ -92,3 +113,9 @@ export default class Login extends Component {
 Login.contextTypes = {
   loggedUser: PropTypes.object,
 };
+
+Login.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(Login);
