@@ -10,6 +10,7 @@ import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
+import Paper from 'material-ui/Paper';
 
 const styles = theme => ({
   root: {
@@ -17,13 +18,17 @@ const styles = theme => ({
     paddingTop: theme.spacing.unit * 20,
   },
   textField: {
-    margin: 'auto',
-    display: 'block',
     width: 200,
   },
   button: {
     margin: theme.spacing.unit,
   },
+  paper: {
+    margin: 'auto',
+    display: 'block',
+    maxWidth: 250,
+    padding: 20,
+  }
 });
 
 class Login extends Component {
@@ -73,37 +78,42 @@ class Login extends Component {
 
     return (
       <div className={classes.root}>
-        <form onSubmit={this.handleSubmi}>
-          <TextField
-            required
-            id="email"
-            label="Email"
-            className={classes.textField}
-            margin="normal"
-            type="email"
-            value={email}
-            onChange={e => this.handleChange('email', e)}
-          />
-          <TextField
-            required
-            id="password"
-            label="Password"
-            className={classes.textField}
-            margin="normal"
-            type="password"
-            value={password}
-            onChange={e => this.handleChange('password', e)}
-          />
-          <Button
-            onClick={this.handleSubmit}
-            variant="raised"
-            color="primary"
-            type="submit"
-            className={classes.button}
-          >
-            Sign-in
-          </Button>
-        </form>
+        <Paper className={classes.paper}>
+          <Typography variant="title">
+            Sign in
+          </Typography>
+          <form onSubmit={this.handleSubmi}>
+            <TextField
+              required
+              id="email"
+              label="Email"
+              className={classes.textField}
+              margin="normal"
+              type="email"
+              value={email}
+              onChange={e => this.handleChange('email', e)}
+            />
+            <TextField
+              required
+              id="password"
+              label="Password"
+              className={classes.textField}
+              margin="normal"
+              type="password"
+              value={password}
+              onChange={e => this.handleChange('password', e)}
+            />
+            <Button
+              onClick={this.handleSubmit}
+              variant="raised"
+              color="primary"
+              type="submit"
+              className={classes.button}
+            >
+              Sign-in
+            </Button>
+          </form>
+        </Paper>
       </div>
     );
   }
