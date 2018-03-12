@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'gatsby-link';
 
+import * as routes from '../../routes.js';
+
 import { withStyles } from 'material-ui/styles';
 import classNames from 'classnames';
 import Drawer from 'material-ui/Drawer';
@@ -10,8 +12,10 @@ import Toolbar from 'material-ui/Toolbar';
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 import Typography from 'material-ui/Typography';
 import Divider from 'material-ui/Divider';
+import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui-icons/Menu';
+import HomeIcon from 'material-ui-icons/Home';
 import ChevronLeftIcon from 'material-ui-icons/ChevronLeft';
 import ChevronRightIcon from 'material-ui-icons/ChevronRight';
 import AccountBalanceIcon from 'material-ui-icons/AccountBalance';
@@ -21,8 +25,6 @@ import ExpandLess from 'material-ui-icons/ExpandLess';
 import ExpandMore from 'material-ui-icons/ExpandMore';
 import StarBorder from 'material-ui-icons/StarBorder';
 import Collapse from 'material-ui/transitions/Collapse';
-
-import withRoot from '../hocs/withRoot';
 
 const drawerWidth = 240;
 
@@ -41,6 +43,9 @@ const styles = theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
+  },
+  flex: {
+    flex: 1,
   },
   appBarShift: {
     marginLeft: drawerWidth,
@@ -90,7 +95,7 @@ const styles = theme => ({
   },
 });
 
-class LayoutIndex extends Component {
+class NavigationAuth extends Component {
   state = {
     open: false,
     openList: false,
@@ -132,9 +137,20 @@ class LayoutIndex extends Component {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="title" color="inherit" noWrap>
+            <Typography
+              variant="title"
+              color="inherit"
+              className={classes.flex}
+              noWrap
+            >
               Awesome App
             </Typography>
+            <Link
+              style={{ textDecoration: 'none', color: 'inherit' }}
+              to={routes.LOGIN}
+            >
+              <Button color="inherit">Login</Button>
+            </Link>
           </Toolbar>
         </AppBar>
         <Drawer
@@ -158,15 +174,15 @@ class LayoutIndex extends Component {
           </div>
           <Divider />
           <List component="nav">
-            <Link style={{ textDecoration: 'none' }} to="/">
+            <Link style={{ textDecoration: 'none' }} to={routes.HOME}>
               <ListItem button>
                 <ListItemIcon>
-                  <InboxIcon />
+                  <HomeIcon />
                 </ListItemIcon>
-                <ListItemText primary="Inbox" />
+                <ListItemText primary="Home" />
               </ListItem>
             </Link>
-            <Link style={{ textDecoration: 'none' }} to="/form">
+            <Link style={{ textDecoration: 'none' }} to={routes.FORM}>
               <ListItem button>
                 <ListItemIcon>
                   <DraftsIcon />
@@ -211,9 +227,9 @@ class LayoutIndex extends Component {
   }
 }
 
-LayoutIndex.propTypes = {
+NavigationAuth.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
 };
 
-export default withRoot(withStyles(styles, { withTheme: true })(LayoutIndex));
+export default withStyles(styles, { withTheme: true })(NavigationAuth);
