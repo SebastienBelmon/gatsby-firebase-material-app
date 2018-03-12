@@ -174,31 +174,18 @@ class NavigationAuth extends Component {
           </div>
           <Divider />
           <List component="nav">
-            <Link style={{ textDecoration: 'none' }} to={routes.HOME}>
-              <ListItem button>
-                <ListItemIcon>
-                  <HomeIcon />
-                </ListItemIcon>
-                <ListItemText primary="Home" />
-              </ListItem>
-            </Link>
-            <Link style={{ textDecoration: 'none' }} to={routes.FORM}>
-              <ListItem button>
-                <ListItemIcon>
-                  <DraftsIcon />
-                </ListItemIcon>
-                <ListItemText primary="Drafts" />
-              </ListItem>
-            </Link>
+            <ListItemLink to={routes.HOME} primary="Home">
+              <HomeIcon />
+            </ListItemLink>
+            <ListItemLink to={routes.FORM} primary="Form">
+              <DraftsIcon />
+            </ListItemLink>
           </List>
           <Divider />
           <List component="nav">
-            <ListItem button>
-              <ListItemIcon>
-                <InboxIcon />
-              </ListItemIcon>
-              <ListItemText primary="Inbox" />
-            </ListItem>
+            <ListItemLink to={routes.HOME} primary="OutBox">
+              <InboxIcon />
+            </ListItemLink>
             <ListItem button onClick={this.toggleOpenList}>
               <ListItemIcon>
                 <DraftsIcon />
@@ -231,5 +218,20 @@ NavigationAuth.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
 };
+
+const ListItemLink = props => (
+  <ListItem button component={Link} to={props.to}>
+    <ListItemIcon>
+      {props.children}
+    </ListItemIcon>
+    <ListItemText primary={props.primary} />
+  </ListItem>
+);
+
+ListItemLink.propTypes = {
+  to: PropTypes.string.isRequired,
+  children: PropTypes.element,
+  primary: PropTypes.string,
+}
 
 export default withStyles(styles, { withTheme: true })(NavigationAuth);

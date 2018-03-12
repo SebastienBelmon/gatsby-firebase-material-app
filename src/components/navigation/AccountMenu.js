@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Link from 'gatsby-link';
+import * as routes from '../../routes';
 
 import { withStyles } from 'material-ui/styles';
 import IconButton from 'material-ui/IconButton';
@@ -75,12 +77,24 @@ class AccountMenu extends Component {
           open={open}
           onClose={this.handleClose}
         >
-          <MenuItem onClick={this.handleClose}>My account</MenuItem>
+          <MenuItemLink onClick={this.handleClose} to={routes.ACCOUNT}>
+            My account
+          </MenuItemLink>
           <MenuItem onClick={this.signOut}>Sign Out</MenuItem>
         </Menu>
       </div>
     );
   }
 }
+
+const MenuItemLink = props => (
+  <MenuItem component={Link} to={props.to} {...props}>
+    My account
+  </MenuItem>
+);
+
+MenuItemLink.propTypes = {
+  to: PropTypes.string.isRequired,
+};
 
 export default withStyles(styles)(AccountMenu);
