@@ -26,6 +26,8 @@ import ExpandMore from 'material-ui-icons/ExpandMore';
 import StarBorder from 'material-ui-icons/StarBorder';
 import Collapse from 'material-ui/transitions/Collapse';
 
+import AccountMenu from './AccountMenu';
+
 const drawerWidth = 240;
 
 const styles = theme => ({
@@ -119,6 +121,7 @@ class NavigationAuth extends Component {
 
     return (
       <div className={classes.root}>
+        {/* HORIZONTAL NAVBAR */}
         <AppBar
           position="absolute"
           className={classNames(
@@ -146,14 +149,10 @@ class NavigationAuth extends Component {
             >
               Awesome App
             </Typography>
-            <Link
-              style={{ textDecoration: 'none', color: 'inherit' }}
-              to={routes.LOGIN}
-            >
-              <Button color="inherit">Login</Button>
-            </Link>
+            <AccountMenu />
           </Toolbar>
         </AppBar>
+        {/* DRAWER MENU */}
         <Drawer
           variant="permanent"
           classes={{
