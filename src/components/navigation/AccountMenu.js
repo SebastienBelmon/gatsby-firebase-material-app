@@ -11,8 +11,8 @@ import { auth } from '../../utils/firebase';
 const styles = {
   account: {
     marginRight: '15px',
-  }
-}
+  },
+};
 
 class AccountMenu extends Component {
   constructor(props) {
@@ -20,7 +20,7 @@ class AccountMenu extends Component {
 
     this.state = {
       anchorEl: null,
-    }
+    };
 
     this.handleMenu = this.handleMenu.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -74,8 +74,8 @@ class AccountMenu extends Component {
           <MenuItem onClick={this.signOut}>Sign Out</MenuItem>
         </Menu>
       </div>
-    )
+    );
   }
-};
+}
 
 export default withStyles(styles)(AccountMenu);
