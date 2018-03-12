@@ -3,14 +3,19 @@ import PropTypes from 'prop-types';
 
 import { withStyles } from 'material-ui/styles';
 import IconButton from 'material-ui/IconButton';
-import AccountCircle from 'material-ui-icons/AccountCircle';
+import Avatar from 'material-ui/Avatar';
 import Menu, { MenuItem } from 'material-ui/Menu';
+import deepOrange from 'material-ui/colors/deepOrange';
 
 import { auth } from '../../utils/firebase';
 
 const styles = {
   account: {
     marginRight: '15px',
+  },
+  orangeAvatar: {
+    color: '#fff',
+    backgroundColor: deepOrange[500],
   },
 };
 
@@ -54,7 +59,7 @@ class AccountMenu extends Component {
           onClick={this.handleMenu}
           color="inherit"
         >
-          <AccountCircle />
+          <Avatar className={classes.orangeAvatar}>SB</Avatar>
         </IconButton>
         <Menu
           id="menu-appbar"
