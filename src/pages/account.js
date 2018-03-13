@@ -15,7 +15,7 @@ import Save from 'material-ui-icons/Save';
 
 const styles = theme => ({
   user: {
-    marginTop: theme.spacing.unit * 3,
+    marginTop: theme.spacing.unit * 4,
   },
   input: {
     marginLeft: theme.spacing.unit * 2,
@@ -30,6 +30,15 @@ const styles = theme => ({
     marginRight: theme.spacing.unit * 3,
     marginBottom: theme.spacing.unit,
   },
+  paperTitle: {
+    paddingTop: theme.spacing.unit * 2,
+    paddingLeft: theme.spacing.unit * 2,
+    paddingBottom: theme.spacing.unit * 2,
+  },
+  container: {
+    margin: 'auto',
+    maxWidth: 850,
+  },
 });
 
 class Account extends React.Component {
@@ -42,69 +51,78 @@ class Account extends React.Component {
         <Typography variant="display1">My Account</Typography>
         <Divider />
 
-        {/* Form */}
-        <form>
-          <Paper className={classes.user}>
-            <Grid container justify="center" spacing={16}>
-              <Grid item sm={6}>
-                <TextField
-                  className={classes.input}
-                  required
-                  id="firstName"
-                  label="First Name"
-                  margin="normal"
-                  placeholder="First Name"
-                  type="text"
-                />
-              </Grid>
-              <Grid item sm={6}>
-                <TextField
-                  className={classes.input}
-                  required
-                  id="lastName"
-                  label="Last Name"
-                  margin="normal"
-                  placeholder="Last Name"
-                  type="text"
-                />
-              </Grid>
-            </Grid>
-
-            <Grid container justify="center" spacing={16}>
-              <Grid item sm={6}>
-                <TextField
-                  className={classes.input}
-                  required
-                  id="email"
-                  label="Email"
-                  margin="normal"
-                  placeholder="Email"
-                  type="email"
-                />
-              </Grid>
-              <Grid item sm={6}>
-                <TextField
-                  className={classes.input}
-                  id="phone"
-                  label="Phone"
-                  margin="normal"
-                  placeholder="Phone"
-                  type="phone"
-                />
-              </Grid>
-            </Grid>
-            <Grid container justify="flex-end" alignItems="flex-end">
-              <Grid item className={classes.saveButton}>
-                <Button variant="raised" color="primary">
-                  <Save
-                    className={classNames(classes.leftIcon, classes.iconSmall)}
+        <div className={classes.container}>
+          {/* Form */}
+          <form>
+            <Paper className={classes.user}>
+              <Typography className={classes.paperTitle} variant="headline">
+                Your Profile
+              </Typography>
+              <Divider />
+              <Grid container justify="center" spacing={16}>
+                <Grid item sm={6}>
+                  <TextField
+                    className={classes.input}
+                    required
+                    id="firstName"
+                    label="First Name"
+                    margin="normal"
+                    placeholder="First Name"
+                    type="text"
                   />
-                  Save Profile
-                </Button>
+                </Grid>
+                <Grid item sm={6}>
+                  <TextField
+                    className={classes.input}
+                    required
+                    id="lastName"
+                    label="Last Name"
+                    margin="normal"
+                    placeholder="Last Name"
+                    type="text"
+                  />
+                </Grid>
               </Grid>
-            </Grid>
-          </Paper>
-        </form>
+
+              <Grid container justify="center" spacing={16}>
+                <Grid item sm={6}>
+                  <TextField
+                    className={classes.input}
+                    required
+                    id="email"
+                    label="Email"
+                    margin="normal"
+                    placeholder="Email"
+                    type="email"
+                  />
+                </Grid>
+                <Grid item sm={6}>
+                  <TextField
+                    className={classes.input}
+                    id="phone"
+                    label="Phone"
+                    margin="normal"
+                    placeholder="Phone"
+                    type="phone"
+                  />
+                </Grid>
+              </Grid>
+              <Grid container justify="flex-end" alignItems="flex-end">
+                <Grid item className={classes.saveButton}>
+                  <Button variant="raised" color="primary">
+                    <Save
+                      className={classNames(
+                        classes.leftIcon,
+                        classes.iconSmall
+                      )}
+                    />
+                    Save Profile
+                  </Button>
+                </Grid>
+              </Grid>
+            </Paper>
+          </form>
+        </div>
       </div>
     );
   }
