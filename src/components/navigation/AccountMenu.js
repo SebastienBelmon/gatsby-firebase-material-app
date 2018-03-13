@@ -81,6 +81,9 @@ class AccountMenu extends Component {
           <MenuItemLink onClick={this.handleClose} to={routes.ACCOUNT}>
             My account
           </MenuItemLink>
+          <MenuItemLink onClick={this.handleClose} to={routes.SETTINGS}>
+            Settings
+          </MenuItemLink>
           <Divider />
           <MenuItem onClick={this.signOut}>Sign Out</MenuItem>
         </Menu>
@@ -91,12 +94,13 @@ class AccountMenu extends Component {
 
 const MenuItemLink = props => (
   <MenuItem component={Link} to={props.to} {...props}>
-    My account
+    {props.children}
   </MenuItem>
 );
 
 MenuItemLink.propTypes = {
   to: PropTypes.string.isRequired,
+  children: PropTypes.string.isRequired,
 };
 
 export default withStyles(styles)(AccountMenu);
