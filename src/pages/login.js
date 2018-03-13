@@ -28,7 +28,7 @@ const styles = theme => ({
     display: 'block',
     maxWidth: 250,
     padding: 20,
-  }
+  },
 });
 
 class Login extends Component {
@@ -79,9 +79,7 @@ class Login extends Component {
     return (
       <div className={classes.root}>
         <Paper className={classes.paper}>
-          <Typography variant="title">
-            Sign in
-          </Typography>
+          <Typography variant="title">Sign in</Typography>
           <form onSubmit={this.handleSubmi}>
             <TextField
               required

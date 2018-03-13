@@ -221,9 +221,7 @@ NavigationAuth.propTypes = {
 
 const ListItemLink = props => (
   <ListItem button component={Link} to={props.to}>
-    <ListItemIcon>
-      {props.children}
-    </ListItemIcon>
+    <ListItemIcon>{props.children}</ListItemIcon>
     <ListItemText primary={props.primary} />
   </ListItem>
 );
@@ -232,6 +230,6 @@ ListItemLink.propTypes = {
   to: PropTypes.string.isRequired,
   children: PropTypes.element,
   primary: PropTypes.string,
-}
+};
 
 export default withStyles(styles, { withTheme: true })(NavigationAuth);
