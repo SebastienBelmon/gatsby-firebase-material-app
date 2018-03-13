@@ -8,6 +8,7 @@ import IconButton from 'material-ui/IconButton';
 import Avatar from 'material-ui/Avatar';
 import Menu, { MenuItem } from 'material-ui/Menu';
 import deepOrange from 'material-ui/colors/deepOrange';
+import Divider from 'material-ui/Divider';
 
 import { auth } from '../../utils/firebase';
 
@@ -80,6 +81,7 @@ class AccountMenu extends Component {
           <MenuItemLink onClick={this.handleClose} to={routes.ACCOUNT}>
             My account
           </MenuItemLink>
+          <Divider />
           <MenuItem onClick={this.signOut}>Sign Out</MenuItem>
         </Menu>
       </div>
