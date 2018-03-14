@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'gatsby-link';
-import * as routes from '../../routes';
+import * as routes from '../../constants/routes';
 
 import { withStyles } from 'material-ui/styles';
 import IconButton from 'material-ui/IconButton';

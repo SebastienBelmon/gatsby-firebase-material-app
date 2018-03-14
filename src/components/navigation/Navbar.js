@@ -13,7 +13,7 @@ import Typography from 'material-ui/Typography';
 import AccountMenu from './AccountMenu';
 import ButtonLink from './ButtonLink';
 
-import * as routes from '../../routes.js';
+import * as routes from '../../constants/routes.js';
 
 const drawerWidth = 240;
 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { navigateTo } from 'gatsby-link';
 
 import { firebase } from '../utils/firebase';
-import * as routes from '../routes';
+import * as routes from '../constants/routes';
 
 const withAuthorization = (WrappedComponent, condition) => {
   class WithAuthorization extends Component {

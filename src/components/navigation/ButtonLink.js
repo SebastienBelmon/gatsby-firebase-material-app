@@ -4,7 +4,7 @@ import Link from 'gatsby-link';
 
 import Button from 'material-ui/Button';
 
-import * as routes from '../../routes.js';
+import * as routes from '../../constants/routes.js';
 
 const ButtonLink = ({ to, color, children }) => (
   <Button color={color || 'inherit'} to={to} component={Link}>

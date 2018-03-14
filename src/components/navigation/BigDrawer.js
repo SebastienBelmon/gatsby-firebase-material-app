@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import * as routes from '../../routes.js';
+import * as routes from '../../constants/routes.js';
 
 import { withStyles } from 'material-ui/styles';
 
