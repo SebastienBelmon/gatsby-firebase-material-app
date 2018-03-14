@@ -65,6 +65,58 @@ const styles = theme => ({
   },
 });
 
+const LinkListAuth = ({ openList, classes }) => (
+  <div>
+    <List component="nav">
+      <ListItemLink to={routes.HOME} primary="Home">
+        <HomeIcon />
+      </ListItemLink>
+      <ListItemLink to={routes.FORM} primary="Form">
+        <DraftsIcon />
+      </ListItemLink>
+    </List>
+    <Divider />
+    <List component="nav">
+      <ListItemLink to={routes.HOME} primary="OutBox">
+        <InboxIcon />
+      </ListItemLink>
+      <ListItem button onClick={() => toggleOpenList()}>
+        <ListItemIcon>
+          <DraftsIcon />
+        </ListItemIcon>
+        <ListItemText inset primary="Inbox" />
+        {openList ? <ExpandLess /> : <ExpandMore />}
+      </ListItem>
+      <Collapse in={openList} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding>
+          <ListItem button className={classes.nested}>
+            <ListItemIcon>
+              <StarBorder />
+            </ListItemIcon>
+            <ListItemText inset primary="Starred" />
+          </ListItem>
+        </List>
+      </Collapse>
+    </List>
+  </div>
+);
+
+LinkListAuth.propTypes = {
+  classes: PropTypes.object.isRequired,
+  openList: PropTypes.bool.isRequired,
+};
+
+const LinkListNonAuth = () => (
+  <List component="nav">
+    <ListItemLink to={routes.HOME} primary="Home">
+      <HomeIcon />
+    </ListItemLink>
+    <ListItemLink to={routes.FORM} primary="Form">
+      <DraftsIcon />
+    </ListItemLink>
+  </List>
+);
+
 class BigDrawer extends React.Component {
   render() {
     const {
@@ -75,6 +127,7 @@ class BigDrawer extends React.Component {
       handleDrawerClose,
       open,
     } = this.props;
+    const { loggedUser } = this.context;
 
     return (
       <Drawer
@@ -97,37 +150,11 @@ class BigDrawer extends React.Component {
           </IconButton>
         </div>
         <Divider />
-        <List component="nav">
-          <ListItemLink to={routes.HOME} primary="Home">
-            <HomeIcon />
-          </ListItemLink>
-          <ListItemLink to={routes.FORM} primary="Form">
-            <DraftsIcon />
-          </ListItemLink>
-        </List>
-        <Divider />
-        <List component="nav">
-          <ListItemLink to={routes.HOME} primary="OutBox">
-            <InboxIcon />
-          </ListItemLink>
-          <ListItem button onClick={() => toggleOpenList()}>
-            <ListItemIcon>
-              <DraftsIcon />
-            </ListItemIcon>
-            <ListItemText inset primary="Inbox" />
-            {openList ? <ExpandLess /> : <ExpandMore />}
-          </ListItem>
-          <Collapse in={openList} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              <ListItem button className={classes.nested}>
-                <ListItemIcon>
-                  <StarBorder />
-                </ListItemIcon>
-                <ListItemText inset primary="Starred" />
-              </ListItem>
-            </List>
-          </Collapse>
-        </List>
+        {loggedUser ? (
+          <LinkListAuth classes={classes} openList={openList} />
+        ) : (
+          <LinkListNonAuth />
+        )}
       </Drawer>
     );
   }
@@ -139,6 +166,10 @@ BigDrawer.propTypes = {
   toggleOpenList: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   handleDrawerClose: PropTypes.func.isRequired,
+};
+
+BigDrawer.contextTypes = {
+  loggedUser: PropTypes.object,
 };
 
 export default withStyles(styles, { withTheme: true })(BigDrawer);
