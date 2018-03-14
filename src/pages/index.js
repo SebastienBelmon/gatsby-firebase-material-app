@@ -31,9 +31,6 @@ class Index extends React.Component {
 
     this.state = {
       open: false,
-      firstName: '',
-      lastName: '',
-      role: '',
     };
   }
 
@@ -49,40 +46,19 @@ class Index extends React.Component {
     });
   };
 
-  componentDidMount() {
-    const id = firebase.auth.currentUser ? firebase.auth.currentUser.uid : '';
-    if (id) {
-      firebase.db
-        .ref('/users/' + id)
-        .once('value')
-        .then(snap => {
-          return snap.val();
-        })
-        .then(({ firstName, lastName, role }) => {
-          this.setState({
-            firstName,
-            lastName,
-            role,
-          });
-        })
-        .catch(err => console.error(err));
-    }
-  }
-
   render() {
     const { classes } = this.props;
-    const { open, firstName, lastName, role } = this.state;
+    const { open } = this.state;
     const { loggedUser } = this.context;
-
-    if (!role && loggedUser) {
-      return <Loading />;
-    }
 
     return (
       <div className={classes.root}>
         <Helmet>
           <title>Gatsby material-ui and firebase starter</title>
-          <meta name="description" content="Simple starter for Gatsby using Material-ui and Firebase" />
+          <meta
+            name="description"
+            content="Simple starter for Gatsby using Material-ui and Firebase"
+          />
         </Helmet>
 
         <Dialog open={open} onClose={this.handleClose}>
@@ -106,20 +82,7 @@ class Index extends React.Component {
           Dialog button example
         </Button>
 
-        {loggedUser && (
-          <div>
-            <br />
-            <br />
-            <br />
-            <Typography>user logged info below:</Typography>
-            <Typography>
-              {firstName} {lastName} - {role}
-            </Typography>
-          </div>
-        )}
-
-        {/* Only admin */}
-        {role === 'admin' && <Typography>Welcome Administrator!</Typography>}
+        {loggedUser && <UserInfo />}
       </div>
     );
   }
@@ -131,6 +94,30 @@ Index.propTypes = {
 
 Index.contextTypes = {
   loggedUser: PropTypes.object,
+};
+
+const UserInfo = (props, { userData }) => {
+  if (!userData) return <Loading />;
+
+  return (
+    <div>
+      <br />
+      <br />
+      <br />
+      <Typography>user logged info below:</Typography>
+      <Typography>
+        {userData.firstName} {userData.lastName} - {userData.role}
+      </Typography>
+      {userData.role === 'admin' && (
+        <Typography>Welcome Administrator!</Typography>
+      )}
+    </div>
+  );
+};
+
+UserInfo.contextTypes = {
+  loggedUser: PropTypes.object,
+  userData: PropTypes.object,
 };
 
 export default withStyles(styles)(Index);

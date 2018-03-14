@@ -11,6 +11,9 @@ import MenuIcon from 'material-ui-icons/Menu';
 import Typography from 'material-ui/Typography';
 
 import AccountMenu from './AccountMenu';
+import ButtonLink from './ButtonLink';
+
+import * as routes from '../../routes.js';
 
 const drawerWidth = 240;
 
@@ -52,6 +55,7 @@ const styles = theme => ({
 class Navbar extends React.Component {
   render() {
     const { open, handleDrawerOpen, classes } = this.props;
+    const { loggedUser } = this.context;
 
     return (
       <AppBar
@@ -75,7 +79,11 @@ class Navbar extends React.Component {
           >
             Awesome App
           </Typography>
-          <AccountMenu />
+          {loggedUser ? (
+            <AccountMenu />
+          ) : (
+            <ButtonLink to={routes.LOGIN}>Login</ButtonLink>
+          )}
         </Toolbar>
       </AppBar>
     );
@@ -86,6 +94,10 @@ Navbar.propTypes = {
   open: PropTypes.bool.isRequired,
   handleDrawerOpen: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
+};
+
+Navbar.contextTypes = {
+  loggedUser: PropTypes.object,
 };
 
 export default withStyles(styles)(Navbar);
