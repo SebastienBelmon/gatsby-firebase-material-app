@@ -9,18 +9,31 @@ import Dialog, {
 } from 'material-ui/Dialog';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
+import { CircularProgress } from 'material-ui/Progress';
+
+import Loading from '../components/Loading';
+
+import { firebase, db } from '../utils/firebase';
 
 const styles = theme => ({
   root: {
     textAlign: 'center',
     paddingTop: theme.spacing.unit * 20,
+    margin: 'auto',
   },
 });
 
 class Index extends React.Component {
-  state = {
-    open: false,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      open: false,
+      firstName: '',
+      lastName: '',
+      role: '',
+    };
+  }
 
   handleClose = () => {
     this.setState({
@@ -34,9 +47,34 @@ class Index extends React.Component {
     });
   };
 
+  componentDidMount() {
+    const id = firebase.auth.currentUser ? firebase.auth.currentUser.uid : '';
+    if (id) {
+      firebase.db
+        .ref('/users/' + id)
+        .once('value')
+        .then(snap => {
+          return snap.val();
+        })
+        .then(({ firstName, lastName, role }) => {
+          this.setState({
+            firstName,
+            lastName,
+            role,
+          });
+        })
+        .catch(err => console.error(err));
+    }
+  }
+
   render() {
     const { classes } = this.props;
-    const { open } = this.state;
+    const { open, firstName, lastName, role } = this.state;
+    const { loggedUser } = this.context;
+
+    if (!role && loggedUser) {
+      return <Loading />;
+    }
 
     return (
       <div className={classes.root}>
@@ -60,6 +98,21 @@ class Index extends React.Component {
         <Button variant="raised" color="secondary" onClick={this.handleClick}>
           Dialog button example
         </Button>
+
+        {loggedUser && (
+          <div>
+            <br />
+            <br />
+            <br />
+            <Typography>user logged info below:</Typography>
+            <Typography>
+              {firstName} {lastName} - {role}
+            </Typography>
+          </div>
+        )}
+
+        {/* Only admin */}
+        {role === 'admin' && <Typography>Welcome Administrator!</Typography>}
       </div>
     );
   }
@@ -67,6 +120,10 @@ class Index extends React.Component {
 
 Index.propTypes = {
   classes: PropTypes.object.isRequired,
+};
+
+Index.contextTypes = {
+  loggedUser: PropTypes.object,
 };
 
 export default withStyles(styles)(Index);
