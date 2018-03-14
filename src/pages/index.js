@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Helmet from 'react-helmet';
+
 import Button from 'material-ui/Button';
 import Dialog, {
   DialogTitle,
@@ -78,6 +80,11 @@ class Index extends React.Component {
 
     return (
       <div className={classes.root}>
+        <Helmet>
+          <title>Gatsby material-ui and firebase starter</title>
+          <meta name="description" content="Simple starter for Gatsby using Material-ui and Firebase" />
+        </Helmet>
+
         <Dialog open={open} onClose={this.handleClose}>
           <DialogTitle>Build your app</DialogTitle>
           <DialogContent>
