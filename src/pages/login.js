@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { navigateTo } from 'gatsby-link';
 
-import * as routes from '../routes';
+import * as routes from '../constants/routes';
 
 import { auth } from '../utils/firebase';
 
